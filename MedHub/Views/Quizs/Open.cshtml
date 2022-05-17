@@ -1,0 +1,12 @@
+﻿@model MedHub.Models.Quiz
+
+@{
+    ViewData["Title"] = "Опросы";
+}
+<h1>@Html.DisplayFor(model => model.Name)</h1>
+<div>
+    @Html.Raw(Model.Url)
+</div>
+<div>|
+    <a asp-action="Index">Back to List</a>
+</div>
