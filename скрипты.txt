@@ -1,0 +1,336 @@
+//CSM
+//
+function onOpen(){
+  Sum();
+}
+
+function Sum() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Ответы на форму (1)");//Активируем таблицу
+  ss.getRange("R1").setValue("Оценка");//Создаем новый столбец с ответами
+  ss.getRange("S1").setValue("Тип");
+  var height = ss.getLastRow();//Узнаем колличество строк в таблице
+
+  
+  var map = new Map();//Хранит в себе ответы и их оценки
+  map.set("5:00 - 6:30", 5);
+  map.set("6:30 - 7:45", 4);
+  map.set("7:45 - 9:45", 3);
+  map.set("9:45 - 11:00", 2);
+  map.set("11:00 - 12:00", 1);
+  map.set("20:00 - 21:00", 5);
+  map.set("21:00 - 22:15", 4);
+  map.set("22:15 - 00:30", 3);
+  map.set("00:30 - 01:45", 2);
+  map.set("01:45 - 03:00", 1);
+  map.set("Очень нелегко", 1);
+  map.set("Не совсем легко", 2);
+  map.set("Достаточно легко", 3);
+  map.set("Очень легко", 4);
+  map.set("Совсем не бодро", 1);
+  map.set("Не вполне бодро", 2);
+  map.set("Достаточно бодро", 3);
+  map.set("Очень бодро", 4);
+  map.set("Очень усталым", 1);
+  map.set("Довольно усталым", 2);
+  map.set("Вполне отдохнувшим", 3);
+  map.set("Хорошо отдохнувшим", 4);
+  map.set("Буду в хорошей форме", 4);
+  map.set("Буду в неплохой форме", 3);
+  map.set("Мне будет нелегко", 2);
+  map.set("Мне будет очень трудно", 1);
+  map.set("20:00 - 21:00", 5);
+  map.set("21:00 - 22:15", 4);
+  map.set("22:15 - 00:30", 3);
+  map.set("00:30 - 01:45", 2);
+  map.set("01:45 - 03:00", 1);
+  map.set("8:00 - 10:00", 4);
+  map.set("11:00 - 13:00", 3);
+  map.set("15:00 - 17:00", 2);
+  map.set("19:00 - 21:00", 1);
+  map.set("Определенно «утренний»", 4);
+  map.set("Скорее «утренний», чем «вечерний»", 3);
+  map.set("Скорее «вечерний», чем «утренний»", 2);
+  map.set("Определенно «вечерний»", 1);
+  map.set("до 6:30", 4);
+  map.set("6:30 - 7:30", 3);
+  map.set("7:30 - 8:30", 2);
+  map.set("8:30 или позже", 1);
+  map.set("Очень трудно и неприятно", 1);
+  map.set("Достаточно трудно и неприятно", 2);
+  map.set("Несколько неприятно, но не проблематично", 3);
+  map.set("Легко и без неприятных ощущений", 4);
+  map.set("0-10 минут", 4);
+  map.set("11-20 минут", 3);
+  map.set("21-40 минут", 2);
+  map.set("больше 40 минут", 1);
+  map.set("Явно утренней активности (активный утром и усталый вечером)", 4);
+  map.set("В некоторой степени, утренней активности", 3);
+  map.set("В некоторой степени, вечерней активности", 2);
+  map.set("Явно вечерней активности (усталый утром и бодрый вечером).", 1);
+
+
+
+  //Цикл проверки ответов и записи в ОЦЕНКИ баллов
+  for(let i = 2;i <= height;i++){
+    var str0 = 'B';
+    var str1 = 'N';
+    var ans = 'R';
+    var type = 'S';
+    var str = str0.concat(i).concat(':').concat(str1).concat(i);
+    var column = ss.getRange(str).getValues();
+    column = column[0];
+    let sum = 0;
+    sum += map.get(column[0]);
+    sum += map.get(column[1]);
+    sum += map.get(column[2]);
+    sum += map.get(column[3]);
+    sum += map.get(column[4]);
+    sum += map.get(column[5]);
+    sum += map.get(column[6]);
+    sum += map.get(column[7]);
+    sum += map.get(column[8]);
+    sum += map.get(column[9]);
+    sum += map.get(column[10]);
+    sum += map.get(column[11]);
+    sum += map.get(column[12]);
+    ss.getRange(ans.concat(i)).setValue(sum);
+    if(sum>=44){
+      ss.getRange(type.concat(i)).setValue("Утренний тип");
+    }
+    else if(sum>=33){
+      ss.getRange(type.concat(i)).setValue("Скорее утренний тип");
+    }
+    else if(sum>22){
+      ss.getRange(type.concat(i)).setValue("Скорее вечерний тип");
+    }
+    else if(sum<=22){
+      ss.getRange(type.concat(i)).setValue("Вечерний тип");
+    }
+  }
+  Logger.log(height);//Вывод в консоли высоты(для проверки)
+}
+
+
+//MCTQ
+//
+//Создает новый лист по шаблону
+function CreateNewSheet(ss,height){
+  newSheet = ss.insertSheet("Переменные MCTQ")//Вставляет новый лист
+  newSheet = ss.getSheetByName("Переменные MCTQ")//Обращается к листу
+  newSheet.activate()//Активирует лист
+  newSheet.getRange("A1").setValue("ID")//Шаблон
+  newSheet.getRange("B1").setValue("Фамилия Имя Отчество")
+  newSheet.getRange("C1").setValue("mun_work_1_")
+  newSheet.getRange("D1").setValue("mun_work_2_")
+  newSheet.getRange("E1").setValue("mun_work_3_")
+  newSheet.getRange("F1").setValue("mun_work_4_")
+  newSheet.getRange("G1").setValue("mun_work_5_")
+  newSheet.getRange("H1").setValue("mun_work_6_")
+  newSheet.getRange("I1").setValue("mun_dayoff_1_")
+  newSheet.getRange("J1").setValue("mun_dayoff_2_")
+  newSheet.getRange("K1").setValue("mun_dayoff_3_")
+  newSheet.getRange("L1").setValue("mun_dayoff_4_")
+  newSheet.getRange("M1").setValue("mun_dayoff_5_")
+  newSheet.getRange("N1").setValue("mun_dayoff_6_")
+  newSheet.getRange("O1").setValue("DayLight_")
+  newSheet.getRange("P1").setValue("DayLight_dayoff_")
+  newSheet.getRange("Q1").setValue("SleepOnset_")
+  newSheet.getRange("R1").setValue("Sleep_")
+  newSheet.getRange("S1").setValue("MedSleep_")
+  newSheet.getRange("T1").setValue("SleepOnset_dayoff_")
+  newSheet.getRange("U1").setValue("Sleep_dayoff_")
+  newSheet.getRange("V1").setValue("MedSleep_dayoff_")
+  newSheet.getRange("W1").setValue("SleepOnset")
+  newSheet.getRange("X1").setValue("Sleep")
+  newSheet.getRange("Y1").setValue("MedSleep")
+  newSheet.getRange("Z1").setValue("SleepOnset_dayoff")
+  newSheet.getRange("AA1").setValue("Sleep_dayoff")
+  newSheet.getRange("AB1").setValue("MedSleep_dayoff")
+  newSheet.getRange('C2:V'.concat(height)).setNumberFormat("@")//Формат значений ячеек
+}
+
+//Конвертирует числа формата xx.xx во время формата hh:mm
+function convertNumToTime(number) {
+    // Check sign of given number
+    var sign = (number >= 0) ? 1 : -1;
+
+    // Set positive value of number of sign negative
+    number = number * sign;
+
+    // Separate the int from the decimal part
+    var hour = Math.floor(number);
+    var decpart = number - hour;
+
+    var min = 1 / 60;
+    // Round to nearest minute
+    decpart = min * Math.round(decpart / min);
+
+    var minute = Math.floor(decpart * 60) + '';
+
+    // Add padding if need
+    if (minute.length < 2) {
+    minute = '0' + minute; 
+    }
+
+    // Add Sign in final result
+    sign = sign == 1 ? '' : '-';
+
+    // Concate hours and minutes
+    time = sign + hour + ':' + minute;
+
+    return time;
+}
+
+//Просчет и заполнение переменных
+function Calculate(newSheet, i){
+  //
+  //Рабочие дни
+  //
+  newSheet.activate()
+  //
+  //SleepOnSet_ -- время засыпания(xx.xx)
+  //
+  var range = newSheet.getRange('Q'.concat(i))
+  var mw2_ = parseFloat(newSheet.getRange('D'.concat(i)).getValue())
+  var mw3_ = parseFloat(newSheet.getRange('E'.concat(i)).getValue()/60)
+  if(mw2_>12){
+    mw2_ = mw2_-24
+  }
+  var sleepOnset_ = (-mw3_ + mw2_).toFixed(2)
+  range.setValue(sleepOnset_)
+  //
+  //SleepOnSet -- время засыпания(hh:mm)
+  //
+  var numTemp = Number(sleepOnset_)
+  if(numTemp<0){
+    numTemp+=24
+  }
+  range = newSheet.getRange('W'.concat(i)).setValue(convertNumToTime(numTemp))
+  //
+  //Sleep_ -- продолжительность сна(xx.xx)
+  //
+  range = newSheet.getRange('R'.concat(i))
+  var sleep_ = (newSheet.getRange('F'.concat(i)).getValue()-sleepOnset_).toFixed(2)
+  range.setValue(sleep_)
+  //
+  //Sleep -- продолжительность сна(hh:mm)
+  //
+  numTemp = Number(sleep_)
+  range = newSheet.getRange('X'.concat(i)).setValue(convertNumToTime(numTemp))
+  //
+  //MedSleep_ -- продолжительность сна(xx.xx)
+  //
+  var medSleep_ = (parseFloat(sleepOnset_)+(parseFloat(sleep_/2))).toFixed(2)
+  //
+  //MedSleep -- продолжительность сна(hh:mm)
+  //
+  numTemp = Number(medSleep_)
+  range = newSheet.getRange('Y'.concat(i)).setValue(convertNumToTime(numTemp))
+  range = newSheet.getRange('S'.concat(i)).setValue(medSleep_)
+  //
+  //Выходные
+  //
+  //
+  //SleepOnset_dayoff_(xx.xx)
+  //
+  mw2_ = parseFloat(newSheet.getRange('J'.concat(i)).getValue())
+  mw3_ = parseFloat(newSheet.getRange('K'.concat(i)).getValue()/60)
+  if(mw2_>12){
+    mw2_ = mw2_-24
+  }
+  sleepOnset_ = (-mw3_ + mw2_).toFixed(2)
+  Logger.log(mw2_+' '+mw3_)
+  range = newSheet.getRange('T'.concat(i)).setValue(sleepOnset_)
+  //
+  //SleepOnset_dayoff(hh:mm)
+  //
+  numTemp = Number(sleepOnset_)
+  if(numTemp<0){
+    numTemp+=24
+  }
+  range = newSheet.getRange('Z'.concat(i)).setValue(convertNumToTime(numTemp))
+
+  //
+  //Sleep_dayoff_(xx.xx)
+  //
+  range = newSheet.getRange('U'.concat(i))
+  sleep_ = (newSheet.getRange('L'.concat(i)).getValue()-sleepOnset_).toFixed(2)
+  range.setValue(sleep_)
+  //
+  //Sleep_dayoff_(hh:mm)
+  //
+  numTemp = Number(sleep_)
+  range = newSheet.getRange('AA'.concat(i)).setValue(convertNumToTime(numTemp))
+  //
+  //MedSleep_dayoff_(xx.xx)
+  //
+  medSleep_ = (parseFloat(sleepOnset_)+(parseFloat(sleep_/2))).toFixed(2)
+  range = newSheet.getRange('V'.concat(i)).setValue(medSleep_)
+  //
+  //MedSleep_dayoff(hh:mm)
+  //
+  numTemp = Number(medSleep_)
+  range = newSheet.getRange('AB'.concat(i)).setValue(convertNumToTime(numTemp))
+}
+
+//Функция заполнения нового листа
+function Fill(ss, map, mas, i){
+  var newSheet = ss.getSheetByName("Переменные MCTQ")//
+  newSheet.activate()//Активация листа
+  var str0 = 'A'//
+  var str1 = 'AB'//
+  var height = newSheet.getLastColumn()//
+  var str = str0.concat(i).concat(':').concat(str1).concat(i)//
+  var range = ss.getRange(str)//
+  for (let j = 1;j<=height;j++){
+    newSheet.getRange(str0.concat(i)).setValue(i-1)//Id
+    var cell = range.getCell(1, j)
+    var obj = mas[map.get(j)]
+    if(typeof obj == "object"){//Обработка времени
+      const date = new Date(obj)
+      cell.setValue(Number(date.getHours()+(date.getMinutes()/60)).toFixed(2))
+      // Logger.log(date.getHours()+(date.getMinutes()/60))
+      continue
+    }
+    cell.setValue(mas[map.get(j)])
+  }
+  Calculate(newSheet, i)
+}
+
+
+
+function Main() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet()//Активируем таблицу
+  var ms = ss.getSheetByName("Ответы на форму (1)")
+  var height = ms.getLastRow();//Узнаем колличество строк в таблице
+  var newSheet = ss.getSheetByName("Переменные MCTQ")
+  //Проверка существования листа
+  if(newSheet==null){
+    CreateNewSheet(ss,height)
+  }
+  var map = new Map();
+  map.set(2, 1);
+  map.set(3, 9);
+  map.set(4, 10);
+  map.set(5, 11);
+  map.set(6, 12);
+  map.set(7, 13);
+  map.set(8, 14);
+  map.set(9, 15);
+  map.set(10, 16);
+  map.set(11, 17);
+  map.set(12, 18);
+  map.set(13, 19);
+  map.set(14, 20);
+  map.set(15, 22);
+  map.set(16, 23);
+  for(let i = 2;i<=height;i++){
+    var str0 = 'A';
+    var str1 = 'X';
+    var str = str0.concat(i).concat(':').concat(str1).concat(i);
+    var mas = ms.getRange(str).getValues();
+    mas = mas[0]
+    Logger.log(mas)
+    Fill(ss, map, mas, i)
+  }
+}
