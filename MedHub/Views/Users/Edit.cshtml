@@ -1,13 +1,13 @@
 ﻿@model MedHub.Models.User
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Изменить";
 }
 
-<h1>Edit</h1>
-
-<h4>User</h4>
+<h1>Изменить</h1>
 <hr />
+@if (User.Identity.IsAuthenticated)
+{
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -24,16 +24,13 @@
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Сохранить" class="btn btn-primary" /> |
+                <a asp-action="Index">Назад к списку</a>
             </div>
         </form>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+}
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

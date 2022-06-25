@@ -36,7 +36,7 @@ namespace MedHub.Controllers
                 {
                     await Authenticate(model.Nickname); // аутентификация
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Quizs");
                 }
                 ModelState.AddModelError("", "Некорректные логин и(или) пароль");
             }

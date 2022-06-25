@@ -61,7 +61,7 @@ namespace MedHub
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Quizs}/{action=Index}/{id?}");
             });
         }
     }

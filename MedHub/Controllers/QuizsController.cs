@@ -24,25 +24,9 @@ namespace MedHub.Controllers
         {
             return View(await _context.Quizzes.ToListAsync());
         }
+
         public async Task<IActionResult> OpenAsync(int id)
         {
-            var quiz = await _context.Quizzes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (quiz == null)
-            {
-                return NotFound();
-            }
-
-            return View(quiz);
-        }
-        // GET: Quizs/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var quiz = await _context.Quizzes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (quiz == null)
@@ -64,7 +48,7 @@ namespace MedHub.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Url")] Quiz quiz)
+        public async Task<IActionResult> Create([Bind("Id,Name,Url,Visibility")] Quiz quiz)
         {
             if (ModelState.IsValid)
             {
@@ -96,7 +80,7 @@ namespace MedHub.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Url")] Quiz quiz)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Url,Visibility")] Quiz quiz)
         {
             if (id != quiz.Id)
             {

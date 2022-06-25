@@ -24,7 +24,7 @@ namespace MedHub.Data
                 context.SaveChanges();
                 var quizes = new Quiz[]
                 {
-                    new Quiz{Name = "Composite Morningness Questionnaire", Url="<iframe src=\"https://docs.google.com/forms/d/e/1FAIpQLSdRNt5tpYZ7V94VL6w2hJ3u39LMtveMuEByAvIoNC5l9nzSjQ/viewform?embedded=true\" width=\"640\" height=\"4770\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\">Загрузка…</iframe>"}
+                    new Quiz{Name = "Composite Morningness Questionnaire", Url="<iframe src=\"https://docs.google.com/forms/d/e/1FAIpQLSdRNt5tpYZ7V94VL6w2hJ3u39LMtveMuEByAvIoNC5l9nzSjQ/viewform?embedded=true\" width=\"640\" height=\"4770\" frameborder=\"0\" marginheight=\"0\" marginwidth=\"0\">Загрузка…</iframe>", Visibility = true}
                 };
                 foreach (Quiz s in quizes)
                 {
